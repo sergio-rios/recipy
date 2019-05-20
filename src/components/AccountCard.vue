@@ -10,7 +10,7 @@
         <v-btn icon large v-on="on">
           <v-avatar
             size="28" tile>
-            <img src="https://vuetifyjs.com/apple-touch-icon-180x180.png" alt="avatar">
+            <img :src="getUserImage" alt="User iamge">
           </v-avatar>
         </v-btn>
       </template>
@@ -19,12 +19,12 @@
         <v-list>
           <v-list-tile avatar>
             <v-list-tile-avatar>
-              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John">
+              <img :src="getUserImage" alt="User iamge">
             </v-list-tile-avatar>
 
             <v-list-tile-content>
-              <v-list-tile-title>Sergio Ríos</v-list-tile-title>
-              <v-list-tile-sub-title>@srios</v-list-tile-sub-title>
+              <v-list-tile-title>{{ user.name }}</v-list-tile-title>
+              <v-list-tile-sub-title>@{{ user.nick }}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -37,7 +37,7 @@
               <button @click="menu = false" class="btn btn1 w-100">Ver perfil</button>
             </v-flex>
             <v-flex xs5>
-              <button @click="menu = false" class="btn btn2 w-100">Cerrar sesión</button>
+              <button @click="logout" class="btn btn2 w-100">Cerrar sesión</button>
             </v-flex>
           </v-layout>
         </v-card-actions>
@@ -52,8 +52,29 @@
       fav: true,
       menu: false,
       message: false,
-      hints: true
-    })
+      hints: true,
+      user: null
+    }),
+
+    created() {
+      this.user = JSON.parse(localStorage.getItem('authUser')).user
+    },
+
+    computed: {
+      getUserImage() {
+        return !!this.user.image
+          ? this.user.image
+          : '/img/user.png'
+      }
+    },
+
+    methods: {
+      logout() {
+        this.menu = false
+        this.$store.dispatch('auth/logout')
+          .then(() => { this.$router.push('/login') })
+      }
+    }
   }
 </script>
 

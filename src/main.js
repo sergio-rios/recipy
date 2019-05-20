@@ -2,7 +2,7 @@ import Vue from 'vue'
 import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import { store } from './store/store'
 import { lang } from './helpers/index'
 
 Vue.use(lang, { lang: 'es_ES' })

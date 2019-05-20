@@ -6,7 +6,7 @@ import Login from '@/views/auth/Login'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -20,3 +20,19 @@ export default new Router({
     }
   ]
 })
+
+// Comprobar antes de servir la vista si es privada
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicRoutes = ['/login']
+  const isPrivate = !publicRoutes.includes(to.path)
+  const authUser = JSON.parse(localStorage.getItem('authUser'))
+
+  if (isPrivate && !authUser) {
+    return next('/login')
+  }
+
+  next()
+})
+
+export default router
