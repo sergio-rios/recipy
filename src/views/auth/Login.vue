@@ -77,22 +77,19 @@ export default {
   },
 
   methods: {
-    login() {
-      this.$store.dispatch("auth/login", this.user)
-        .then(response => {
-          this.$router.push('/')
-          if (this.user.remember) {
-            window.localStorage.setItem('rememberedUser', JSON.stringify(this.user))
-          }
-          else {
-            window.localStorage.removeItem('rememberedUser')
-          }
-        })
-        .catch(error => {
-          if (error.response.status === 401) {
-            console.log(error.response)
-          }
-        })
+    async login() {
+      try {
+        await this.$store.dispatch("auth/login", this.user)
+        this.$router.push('/')
+        if (this.user.remember) {
+          window.localStorage.setItem('rememberedUser', JSON.stringify(this.user))
+        } else {
+          window.localStorage.removeItem('rememberedUser')
+        }
+      }
+      catch (error) {
+        alert(error)
+      }
     }
   }
 }

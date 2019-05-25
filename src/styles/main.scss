@@ -1,6 +1,8 @@
 @import './theme.scss';
 
-* { font-family: $font; }
+* {
+  font-family: $font;
+}
 
 html { overflow-y: auto; }
 
@@ -23,7 +25,7 @@ html { overflow-y: auto; }
   border: 2px solid;
   border-color: $primary-color;
   border-radius: 50px;
-  padding: 0.3rem 1rem;
+  padding: 0.3rem 1.3rem;
   font-size: 1.1rem;
   transition: all 300ms;
 }
@@ -39,12 +41,17 @@ html { overflow-y: auto; }
 }
 
 .btn2 {
-  color: $primary-color;
+  color: $primary-color !important;
 
   &:hover {
     border-color: darken($primary-color, 6%);
     color: darken($primary-color, 6%);
   }
+}
+
+.btn-disabled {
+  filter: grayscale(0.5);
+  cursor: not-allowed;
 }
 
 .w-100 {

@@ -6,36 +6,33 @@ export const auth = {
   namespaced: true,
 
   state: {
-    status: 'loggedOut'
+    status: 'loggedOut',
+    auth: {
+      user: null,
+      token: null
+    }
   },
 
   actions: {
-    login({ commit }, user) {
-      return new Promise((resolve, reject) => {
+    async login({ commit }, user) {
+      try {
         commit('authRequest')
-        axios.post(`${apiURL}login`, user)
-          .then(response => {
-            const authUser = JSON.stringify(response.data)
-            localStorage.setItem('authUser', authUser)
-            axios.defaults.headers.common['Authorization'] = `Bearer ${authUser.token}`
-            commit('authSuccess')
-            resolve(response)
-          })
-          .catch(error => {
-            commit('authError')
-            localStorage.removeItem('authUser')
-            reject(error)
-          })
-      })
+        const response = await axios.post(`${apiURL}login`, user)
+        commit('authSuccess', response.data)
+      }
+      catch (error) {
+        commit('logginError')
+        throw error.response.data.code
+      }
+    },
+
+    async edit({ commit }, user) {
+      commit('authUserChange', user)
     },
 
     logout({commit}) {
-      return new Promise((resolve) => {
-        localStorage.removeItem('authUser')
-        delete axios.defaults.headers.common['Authorization']
-        commit('logout')
-        resolve()
-      })
+      delete axios.defaults.headers.common['Authorization']
+      commit('logout')
     }
   },
 
@@ -44,16 +41,26 @@ export const auth = {
       state.status = 'loggingIn'
     },
 
-    authSuccess(state) {
+    authSuccess(state, data) {
       state.status = 'loggedIn'
+      state.auth.user = data.user
+      state.auth.token = data.token
+    },
+
+    authUserChange(state, user) {
+      state.auth.user = user
     },
 
     authError(state) {
       state.status = 'logginError'
+      state.auth.user = null
+      state.auth.token = null
     },
 
     logout(state) {
       state.status = 'loggedOut'
+      state.auth.user = null
+      state.auth.token = null
     },
   }
 }

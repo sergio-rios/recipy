@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { store } from './store/store'
 
 import Home from '@/views/Home'
 import Login from '@/views/auth/Login'
+import Profile from '@/views/user/Profile'
+import Settings from '@/views/user/Settings'
 
 Vue.use(Router)
 
@@ -10,14 +13,10 @@ const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    {
-      path: '/login',
-      component: Login
-    },
-    {
-      path: '/',
-      component: Home
-    }
+    { path: '/', component: Home },
+    { path: '/login', component: Login },
+    { path: '/user/:id', component: Profile, props: true },
+    { path: '/user/:id/settings', component: Settings, props: true }
   ]
 })
 
@@ -26,7 +25,7 @@ router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
   const publicRoutes = ['/login']
   const isPrivate = !publicRoutes.includes(to.path)
-  const authUser = JSON.parse(localStorage.getItem('authUser'))
+  const authUser = store.state.auth.auth
 
   if (isPrivate && !authUser) {
     return next('/login')
