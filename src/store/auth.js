@@ -21,8 +21,8 @@ export const auth = {
         commit('authSuccess', response.data)
       }
       catch (error) {
-        commit('logginError')
-        throw error.response.data.code
+        commit('authError')
+        throw error.response.data
       }
     },
 

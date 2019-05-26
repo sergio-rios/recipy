@@ -75,13 +75,15 @@ export default {
 
   computed: {
     showUI() {
-      const notUI = ['/login']
+      const notUI = ['/login', '/new-account']
       
       return !notUI.includes(this.$route.path)
     },
     wallpaper() {
+      const wallpaper = ['/login', '/new-account']
+
       return {
-        wallpaper: this.$route.path === '/login'
+        wallpaper: wallpaper.includes(this.$route.path)
       }
     }
   }

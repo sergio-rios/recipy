@@ -5,9 +5,28 @@
       <div class="card">
         <h1>Recipy</h1>
         <v-form @submit.prevent="login">
-          <v-text-field v-model="user.email" prepend-icon="fas fa-user" name="login" :label="$text(1, 1, 1)" type="text"></v-text-field>
+          <v-text-field
+            v-model="user.email"
+            prepend-icon="fas fa-user"
+            name="login"
+            :label="$text(1, 1, 1)"
+            type="text"
+          ></v-text-field>
+          
 
-          <v-text-field v-model="user.password" id="password" prepend-icon="fas fa-key" name="password" :label="$text(1, 1, 2)" type="password"></v-text-field>
+          <v-text-field
+            v-model="user.password"
+            prepend-icon="fas fa-key"
+            name="password"
+            :label="$text(1, 1, 2)"
+            type="password"
+          ></v-text-field>
+
+          
+          <small v-for="(error, index) in errors" class="msg-error text-center" :key="index">
+            <i v-if="error" class="fas fa-times"></i>
+            {{ error }}
+          </small>
 
           <v-checkbox
             v-model="user.remember"
@@ -17,8 +36,10 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <a href="#" class="no-link mr-4">{{ $text(1, 1, 6) }}</a>
-            <button class="btn btn1">
+            <router-link to="/new-account">
+              {{ $text(1, 1, 6) }}
+            </router-link>
+            <button class="btn btn1 ml-3">
               {{ loadingBtn }}
               <v-progress-circular
                 v-if="loggingIn"
@@ -47,7 +68,9 @@ export default {
       remember: false
     },
     errors: {
-      unauthorized: false
+      email: null,
+      pass: null,
+      verified: null
     },
     drawer: null
   }),
@@ -78,6 +101,8 @@ export default {
 
   methods: {
     async login() {
+      for (let key in this.errors) this.errors[key] = null
+
       try {
         await this.$store.dispatch("auth/login", this.user)
         this.$router.push('/')
@@ -88,7 +113,17 @@ export default {
         }
       }
       catch (error) {
-        alert(error)
+        switch (error.error) {
+          case 'unauthorized_email':
+            this.errors.email = 'No existe ninguna cuenta con ese email'
+            break
+          case 'unauthorized_pass':
+            this.errors.pass = 'Contraseña incorrecta'
+            break
+          case 'verified':
+            this.errors.verified = 'Email no verificado'
+            break
+        }
       }
     }
   }

@@ -22,23 +22,36 @@ export const data = {
         return response
       }
       catch (error) {
+        commit('failure')
         throw error.response.data.code
       }
     },
 
-    async update({ commit }, data) {
+    async create({ commit }, params) {
+      try {
+        commit('loading')
+        const response = await axios.post(`${apiURL}${params.path}`, params.data)
+        commit('success')
+        return response
+      }
+      catch (error) {
+        commit('failure')
+        throw error.response.data
+      }
+    },
+
+    async update({ commit }, params) {
       try {
         commit('loading')
         const token = store.state.auth.auth.token
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         
-        console.log(data)
-        const response = await axios.put(`${apiURL}user/${data.id}`, data)
+        const response = await axios.put(`${apiURL}${params.path}`, params.data)
         commit('success')
         return response
       }
       catch (error) {
-        console.error(error.response)
+        commit('failure')
         throw error.response.data.code
       }
     }

@@ -4,7 +4,6 @@
     <v-flex xs10 sm5 md4 lg3 xl2>
       <v-form
         @submit.prevent="save"
-        ref="form"
         v-model="valid"
         lazy-validation
       >
@@ -134,7 +133,10 @@ export default {
   methods: {
     async save() {
       try {
-        const response = await this.$store.dispatch('data/update', this.user)
+        const response = await this.$store.dispatch('data/update', {
+          path: `user/${this.user.id}`,
+          data: this.user
+        })
         this.$store.dispatch('auth/edit', response.data)
         this.goBack()
       }

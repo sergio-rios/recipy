@@ -4,6 +4,7 @@ import { store } from './store/store'
 
 import Home from '@/views/Home'
 import Login from '@/views/auth/Login'
+import NewAccount from '@/views/auth/NewAccount'
 import Profile from '@/views/user/Profile'
 import Settings from '@/views/user/Settings'
 
@@ -15,6 +16,7 @@ const router = new Router({
   routes: [
     { path: '/', component: Home },
     { path: '/login', component: Login },
+    { path: '/new-account', component: NewAccount },
     { path: '/user/:id', component: Profile, props: true },
     { path: '/user/:id/settings', component: Settings, props: true }
   ]
