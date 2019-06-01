@@ -36,15 +36,16 @@ export default {
     async btnLikeClick() {
       try {
         if (!this.isLiked) {
+          this.isLiked = !this.isLiked
           await LikeService.like({ post_id: this.postId })
         }
         else {
+          this.isLiked = !this.isLiked
           const response = await LikeService.unlike(this.postId)
         }
-
-        this.isLiked = !this.isLiked
       }
       catch (error) {
+        this.isLiked = !this.isLiked
         console.error(error.response)
       }
     },

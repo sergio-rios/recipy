@@ -25,10 +25,27 @@
         ></v-textarea>
       </v-flex>
 
-      <v-flex xs1 mr-3 pb-2>
+      <v-flex xs1 mr-3>
         <v-btn type="submit" color="secondary" icon flat>
-          <v-icon>fas fa-share</v-icon>
+          <v-icon small>fas fa-share</v-icon>
         </v-btn>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row>
+      <v-flex xs12 >
+        <p v-for="(comment, index) in commentsList" :key="index">
+          <router-link :to="`/user/${comment.user.id}`" class="no-link">
+            @{{ comment.user.nick }}
+          </router-link>
+          {{ comment.content }}
+          <br>
+          <span class="muted-text">{{ $time(comment.created_at) }} | {{ $date(comment.created_at) }}</span>
+          <span v-if="showDelete(comment.user_id)" class="muted-text" @click="delComment(comment.id)">
+            &bull;
+            <span class="del-link">Borrar</span>
+          </span>          
+        </p>
       </v-flex>
     </v-layout>
       
@@ -43,40 +60,84 @@ export default {
   name: 'Comments',
 
   props: {
-    postId: Number
+    post: Object
   },
 
   data: () => ({
     valid: false,
     comment: null,
+    commentsList: null,
     commentRules: [
       v => !!v || 'Comment is required',
     ],
   }),
 
+  computed: {
+    
+  },
+
   created() {
+    this.getComments()
     this.comment = {
       user_id: this.$store.getters['auth/user'].id,
-      post_id: this.postId,
+      post_id: this.post.id,
       content: ''
     }
   },
 
   methods: {
-    async pushComment() {
+    async getComments() {
       try {
-        await CommentService.post(this.comment)
+        const response = await CommentService.getAll(this.post.id);
+        console.log(response)
+        this.commentsList = response.data
       }
       catch (error) {
         console.error(error)
       }
+    },
+
+    async pushComment() {
+      try {
+        await CommentService.post(this.comment)
+        this.getComments()
+        this.comment.content = ''
+      }
+      catch (error) {
+        console.error(error)
+      }
+    },
+
+    async delComment(id) {
+      try {
+        await CommentService.delete(id)
+        this.getComments()
+      }
+      catch (error) {
+        console.error(error)
+      }
+    },
+
+    showDelete(user_id) {
+      return user_id === this.$store.getters['auth/user'].id
+          || this.post.user_id === this.$store.getters['auth/user'].id
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 section {
   padding: 1rem;
+}
+
+.user-nick {
+  color: orange;
+  font-weight: bold;
+}
+
+.del-link:hover {
+  color: red;
+  cursor: pointer;
 }
 </style>

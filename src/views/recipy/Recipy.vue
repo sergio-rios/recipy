@@ -2,9 +2,9 @@
 <v-container fluid>
   <v-layout justify-center wrap>
     <v-flex xs12 sm8 md6 lg6 xl4>
-      <v-card v-if="success" class="rounded">
+      <v-card v-if="success" class="rounded pb-5">
         <v-img
-          src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+          src="https://cdn-3.expansion.mx/dims4/default/d528803/2147483647/strip/true/crop/800x533+0+0/resize/800x533!/quality/90/?url=https%3A%2F%2Fcherry-brightspot.s3.amazonaws.com%2Fbe%2F8f%2F9a20186a476a868772781d5b5ae3%2Falitas.jpg"
           aspect-ratio="1.5"
         ></v-img>
 
@@ -17,7 +17,7 @@
                   <span class="muted-text"> &bull; {{ $date(recipy.created_at) }}</span>
                 </p>
               </v-flex>
-              <v-flex xs1pr-1>
+              <v-flex xs1 pr-5>
                 <like-btn :postId="recipy.id" :postLikes="recipy.like" />
               </v-flex>             
             </v-layout>
@@ -37,7 +37,7 @@
               </v-tab-item>
 
               <v-tab-item>
-                <Comments :postId="recipy.id" />
+                <Comments :post="recipy" />
               </v-tab-item>
             </v-tabs-items>
 
@@ -68,7 +68,7 @@ export default {
   },
 
   data: () => ({
-    recipy: undefined,
+    recipy: null,
     selectTab: null,
     tabs: ['fas fa-utensils', 'fas fa-comment']
   }),

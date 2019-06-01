@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'Recipy',
+  name: 'Recipe',
 
   props: {
     recipy: Object
