@@ -99,7 +99,7 @@ export default {
           data: this.post
         })
         const recipyID = response.data.id
-        this.$router.push(`/${recipyID}`)
+        this.$router.push(`/recipy/${recipyID}`)
       }
       catch (error) {
         console.log(error)

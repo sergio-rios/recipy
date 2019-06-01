@@ -7,7 +7,8 @@ import es from 'vuetify/es5/locale/es'
 Vue.use(Vuetify, {
   iconfont: 'md',
   theme: {
-    primary: '#f3a719'
+    primary: '#f3a719',
+    secondary: '#777777'
   },
   lang: {
     locales: { en, es },

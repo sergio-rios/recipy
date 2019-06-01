@@ -37,7 +37,7 @@
               </v-tab-item>
 
               <v-tab-item>
-                <Recipe :recipy="recipy" />
+                <Comments :postId="recipy.id" />
               </v-tab-item>
             </v-tabs-items>
 
@@ -52,6 +52,7 @@
 <script>
 import Recipe from './components/Recipe'
 import LikeBtn from './components/LikeBtn'
+import Comments from './components/Commets'
 
 export default {
   name: 'Recipy',
@@ -62,6 +63,7 @@ export default {
 
   components: {
     Recipe,
+    Comments,
     LikeBtn
   },
 
