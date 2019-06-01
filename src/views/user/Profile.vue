@@ -76,7 +76,7 @@ export default {
   methods: {
     async getUserData() {
       try {
-        const response = await this.$store.dispatch('data/getOne', this.id)
+        const response = await this.$store.dispatch('data/get', `user/${this.id}`)
         this.user = response.data
       }
       catch (error) {

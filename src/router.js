@@ -7,6 +7,8 @@ import Login from '@/views/auth/Login'
 import NewAccount from '@/views/auth/NewAccount'
 import Profile from '@/views/user/Profile'
 import Settings from '@/views/user/Settings'
+import Recipy from '@/views/recipy/Recipy'
+import CreateRecipy from '@/views/recipy/CreateRecipy'
 
 Vue.use(Router)
 
@@ -18,7 +20,9 @@ const router = new Router({
     { path: '/login', component: Login },
     { path: '/new-account', component: NewAccount },
     { path: '/user/:id', component: Profile, props: true },
-    { path: '/user/:id/settings', component: Settings, props: true }
+    { path: '/user/:id/settings', component: Settings, props: true },
+    { path: '/recipy/create', component: CreateRecipy },
+    { path: '/recipy/:id', component: Recipy, props: true },
   ]
 })
 

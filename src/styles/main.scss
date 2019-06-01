@@ -54,6 +54,10 @@ html { overflow-y: auto; }
   cursor: not-allowed;
 }
 
+.rounded {
+  border-radius: 10px;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -62,4 +66,8 @@ html { overflow-y: auto; }
   color: #ff4b4b;
   display: block;
   font-weight: bold;
+}
+
+.muted-text {
+  color: rgba(0, 0, 0, 0.45);
 }

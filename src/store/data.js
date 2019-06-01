@@ -11,13 +11,13 @@ export const data = {
   },
 
   actions: {
-    async getOne({ commit }, id) {
+    async get({ commit }, path) {
       try {
         commit('loading')
         const token = store.state.auth.auth.token
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         
-        const response = await axios.get(`${apiURL}user/${id}`)
+        const response = await axios.get(`${apiURL}/${path}`)
         commit('success')
         return response
       }
@@ -30,7 +30,10 @@ export const data = {
     async create({ commit }, params) {
       try {
         commit('loading')
-        const response = await axios.post(`${apiURL}${params.path}`, params.data)
+        const token = store.state.auth.auth.token
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        
+        const response = await axios.post(`${apiURL}/${params.path}`, params.data)
         commit('success')
         return response
       }
@@ -46,7 +49,23 @@ export const data = {
         const token = store.state.auth.auth.token
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         
-        const response = await axios.put(`${apiURL}${params.path}`, params.data)
+        const response = await axios.put(`${apiURL}/${params.path}`, params.data)
+        commit('success')
+        return response
+      }
+      catch (error) {
+        commit('failure')
+        throw error.response.data.code
+      }
+    },
+
+    async delete({ commit }, path) {
+      try {
+        commit('loading')
+        const token = store.state.auth.auth.token
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        
+        const response = await axios.put(`${apiURL}/${path}`)
         commit('success')
         return response
       }

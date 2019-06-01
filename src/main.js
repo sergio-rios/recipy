@@ -3,8 +3,11 @@ import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
 import { store } from './store/store'
-import { lang } from './helpers/index'
+import { lang, date } from './helpers/index'
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
+Vue.use(CKEditor)
+Vue.use(date)
 Vue.use(lang, { lang: 'es_ES' })
 
 Vue.config.productionTip = false

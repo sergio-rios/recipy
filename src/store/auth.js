@@ -13,11 +13,16 @@ export const auth = {
     }
   },
 
+  getters: {
+    user: state => state.auth.user,
+    token: state => state.auth.token
+  },
+
   actions: {
     async login({ commit }, user) {
       try {
         commit('authRequest')
-        const response = await axios.post(`${apiURL}login`, user)
+        const response = await axios.post(`${apiURL}/login`, user)
         commit('authSuccess', response.data)
       }
       catch (error) {

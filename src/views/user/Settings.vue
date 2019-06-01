@@ -7,7 +7,7 @@
         v-model="valid"
         lazy-validation
       >
-      <h1 class="text-xs-center my-4">{{ $text(4, 1, 1) }}</h1>
+      <h2 class="text-xs-center my-4">{{ $text(4, 1, 1) }}</h2>
         <div class="container-avatar">
           <img :src="getUserImage" alt="avatar">
         </div>
