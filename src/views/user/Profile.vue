@@ -35,14 +35,27 @@
         </v-flex>
       </v-layout>
       <hr>
+
+      <!-- POSTS SECTION -->
+      <v-layout row wrap>
+        <v-flex v-for="(post, index) in user.post" :key="index" xs12 sm6 md4>
+          <PostView :post="post"/>
+        </v-flex>
+      </v-layout>
     </v-flex>
   </v-layout>
 </v-container>
 </template>
 
 <script>
+import PostView from './components/PostView'
+
 export default {
   name: 'Profile',
+
+  components: {
+    PostView
+  },
 
   props: {
     id: String
