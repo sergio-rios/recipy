@@ -11,13 +11,13 @@
 
         <v-text-field
           v-model="post.title"
-          :counter="100"
+          :counter="40"
           :rules="titleRules"
           label="Título"
           required
-          
-          class="mb-5"
         ></v-text-field>
+
+        <TagSelector class="mb-4" />
 
         <p class="theme--light v-label">Describe tu recipy paso a paso</p>
         <ckeditor
@@ -48,20 +48,27 @@
 </template>
 
 <script>
+import TagSelector from './components/TagSelector'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
   name: 'CreateRecipy',
+
+  components: {
+    TagSelector
+  },
+
   data: () => ({
     valid: false,
     post: {
       title: null,
+      tags: null,
       description: null,
       photo: null
     },
     titleRules: [
       v => !!v || 'El título no puede estar vacio',
-      v => (v && v.length <= 100) || 'El título supera los 100 caracteres',
+      v => (v && v.length <= 40) || 'El título supera los 40 caracteres',
     ],
     editor: ClassicEditor,
     editorConfig: {
@@ -94,6 +101,8 @@ export default {
   methods : {
     async create() {
       try {
+        this.post.tags = this.$store.getters['tag/selected'].map(tag => tag.id)
+        console.log(this.post)
         const response = await this.$store.dispatch('data/create', {
           path: 'post',
           data: this.post

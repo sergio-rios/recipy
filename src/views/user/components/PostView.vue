@@ -1,6 +1,6 @@
 <template>
-  <router-link :to="post">
-    <v-card class="ma-2">
+  <router-link :to="`/recipy/${post.id}`">
+    <v-card class="rounded ma-2">
       <div class="profile-post">
         <v-img
         src="https://www.abc.es/media/familia/2018/05/23/Minevera_Pasta-k4KC--620x349@abc.jpg"
@@ -8,7 +8,7 @@
         class="profile-post-img"
       >
       </v-img>
-      <div class="profile-post-title">Alitas de pollo a la barbacoa</div>
+      <div class="profile-post-title">{{ post.title }}</div>
       </div>
     </v-card>
   </router-link>
@@ -64,7 +64,7 @@ export default {
 .profile-post-title {
   color: white;
   display: none;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   left: 50%;
   position: absolute;
   text-align: center;  

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import LikeService from '@/services/like'
 
 const apiURL = process.env.VUE_APP_API_URL
 
