@@ -49,32 +49,32 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      fav: true,
-      menu: false,
-      message: false,
-      hints: true
-    }),
+export default {
+  data: () => ({
+    fav: true,
+    menu: false,
+    message: false,
+    hints: true
+  }),
 
-    computed: {
-      getUserImage() {
-        return this.getAuthUser().image
-          ? this.getAuthUser().image
-          : '/img/user.png'
-      }
+  computed: {
+    getUserImage() {
+      return this.getAuthUser().image
+        ? this.getAuthUser().image
+        : '/img/user.png'
+    }
+  },
+
+  methods: {
+    getAuthUser() {
+      return this.$store.state.auth.auth.user
     },
 
-    methods: {
-      getAuthUser() {
-        return this.$store.state.auth.auth.user
-      },
-
-      logout() {
-        this.menu = false
-        this.$store.dispatch('auth/logout')
-        this.$router.push('/login')
-      }
+    logout() {
+      this.menu = false
+      this.$store.dispatch('auth/logout')
+      this.$router.push('/login')
     }
   }
+}
 </script>

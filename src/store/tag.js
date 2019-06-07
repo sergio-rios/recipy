@@ -54,5 +54,9 @@ export const tag = {
     remove(state, item) {
       state.selected = state.selected.filter(tag => tag.id !== item.id)
     },
+
+    clear(state) {
+      state.selected = []
+    }
   }
 }

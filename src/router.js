@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { store } from './store/store'
 
-import Home from '@/views/Home'
+import Home from '@/views/home/Home'
 import Login from '@/views/auth/Login'
 import NewAccount from '@/views/auth/NewAccount'
 import Profile from '@/views/user/Profile'
@@ -35,6 +35,13 @@ router.beforeEach((to, from, next) => {
 
   if (isPrivate && !authUser) {
     return next('/login')
+  }
+
+  console.log(to)
+
+  if (from.path === '/' && to.path.match(/^\/recipy\/create$/)) {
+    store.commit('tag/clear')
+    store.commit('search/clear')
   }
 
   next()
