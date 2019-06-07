@@ -11,7 +11,7 @@
 
       <v-flex>
         <div class="img-container">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlCLI3_VmAEZdeiR3TOj1aMfzYvIpOF5i9hk_BgspHELz1oQucsA">
+          <img :src="getImage">
         </div>
       </v-flex>      
     </v-layout>
@@ -25,6 +25,14 @@ export default {
 
   props: {
     post: Object
+  },
+
+  computed: {
+    getImage() {
+      return this.post.image
+        ? this.post.image
+        : '/img/cover.png'
+    }
   }
 }
 </script>

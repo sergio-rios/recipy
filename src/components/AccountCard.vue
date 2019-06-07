@@ -9,8 +9,9 @@
       <template v-slot:activator="{ on }">
         <v-btn icon large v-on="on">
           <v-avatar
-            size="28" tile>
-            <img :src="getUserImage" alt="User iamge">
+            class="photo"
+            size="28">
+            <img :src="getUserImage" alt="user image" style="width: 100%;">
           </v-avatar>
         </v-btn>
       </template>
@@ -18,8 +19,8 @@
       <v-card>
         <v-list>
           <v-list-tile avatar>
-            <v-list-tile-avatar>
-              <img :src="getUserImage" alt="User iamge">
+            <v-list-tile-avatar class="photo">
+              <img :src="getUserImage" alt="User iamge">              
             </v-list-tile-avatar>
 
             <v-list-tile-content>
@@ -78,3 +79,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.photo {
+  border-radius: 50px;
+  overflow: hidden;
+
+  img {
+    object-fit: cover;
+    -o-object-fit: cover;
+  }
+}
+</style>
+

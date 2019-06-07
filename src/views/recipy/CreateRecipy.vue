@@ -19,7 +19,9 @@
 
         <TagSelector class="mb-4" />
 
-        <p class="theme--light v-label">Describe tu recipy paso a paso</p>
+        <ImageInput label="Muestra la pinta que tiene" />
+
+        <p class="theme--light v-label mt-5">Describe tu recipy paso a paso</p>
         <ckeditor
           v-model="post.description"
           class="mt-3"
@@ -49,13 +51,16 @@
 
 <script>
 import TagSelector from './components/TagSelector'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ImageInput from '@/components/ImageInput'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'CreateRecipy',
 
   components: {
-    TagSelector
+    TagSelector,
+    ImageInput
   },
 
   data: () => ({
@@ -64,7 +69,7 @@ export default {
       title: null,
       tags: null,
       description: null,
-      photo: null
+      image: null
     },
     titleRules: [
       v => !!v || 'El título no puede estar vacio',
@@ -72,15 +77,19 @@ export default {
     ],
     editor: ClassicEditor,
     editorConfig: {
-        language: {
-          type: String,
-          default: 'es'
-        },
-        toolbar: [ 'heading', 'bold', 'italic', '|', 'bulletedlist', 'numberedlist', '|', 'undo', 'redo' ]
+      language: {
+        type: String,
+        default: 'es'
+      },
+      toolbar: [ 'heading', 'bold', 'italic', '|', 'bulletedlist', 'numberedlist', '|', 'undo', 'redo' ]
     }
   }),
 
   computed: {
+    ...mapGetters({
+      image: 'file/file'
+    }),
+
     disabled() {
       return {
         'btn-disabled': !this.valid
@@ -101,6 +110,7 @@ export default {
   methods : {
     async create() {
       try {
+        this.post.image = this.image
         this.post.tags = this.$store.getters['tag/selected'].map(tag => tag.id)
         console.log(this.post)
         const response = await this.$store.dispatch('data/create', {

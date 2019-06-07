@@ -8,8 +8,15 @@
         lazy-validation
       >
       <h2 class="text-xs-center my-4">{{ $text(4, 1, 1) }}</h2>
+        <!-- <div class="container-avatar">
+          <img :src="getUserImage" alt="avatar">          
+        </div>
+        <h4 class="text-xs-center mb-4">
+          <a href="#" class="no-link" @click.prevent="">Cambiar</a>
+        </h4> -->
+
         <div class="container-avatar">
-          <img :src="getUserImage" alt="avatar">
+          <ImageInput centered circle :defaultImage="getUserImage"/>
         </div>
 
         <v-text-field
@@ -68,8 +75,15 @@
 </template>
 
 <script>
+import ImageInput from '@/components/ImageInput'
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Settings',
+
+  components: {
+    ImageInput
+  },
 
   data: () => ({
     user: null,
@@ -103,6 +117,10 @@ export default {
   }),
 
   computed: {
+    ...mapGetters({
+      image: 'file/file'
+    }),
+
     getUserImage() {
       return !!this.user.image
         ? this.user.image
@@ -133,6 +151,7 @@ export default {
   methods: {
     async save() {
       try {
+        this.user.image = this.image 
         const response = await this.$store.dispatch('data/update', {
           path: `user/${this.user.id}`,
           data: this.user
@@ -154,19 +173,9 @@ export default {
 
 <style lang="scss" scoped>
 .container-avatar {
-  width: 9rem;
-  height: 9rem;
   border-radius: 100%;
   margin: auto;
   margin-bottom: 1.5rem;
-  overflow: hidden;
-
-  img {
-    display: block;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
 }
 
 button {

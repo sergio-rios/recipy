@@ -3,10 +3,10 @@
     <v-card class="rounded ma-2">
       <div class="profile-post">
         <v-img
-        src="https://www.abc.es/media/familia/2018/05/23/Minevera_Pasta-k4KC--620x349@abc.jpg"
-        aspect-ratio="1"
-        class="profile-post-img"
-      >
+          :src="getImage"
+          aspect-ratio="1"
+          class="profile-post-img"
+        >
       </v-img>
       <div class="profile-post-title">{{ post.title }}</div>
       </div>
@@ -20,6 +20,14 @@ export default {
 
   props: {
     post: Object
+  },
+
+  computed: {
+    getImage() {
+      return this.post.image
+        ? this.post.image
+        : '/img/cover.png'
+    }
   }
 }
 </script>

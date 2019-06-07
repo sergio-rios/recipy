@@ -91,6 +91,7 @@ export default {
       try {
         const response = await this.$store.dispatch('data/get', `user/${this.id}`)
         this.user = response.data
+        console.log(this.user)
       }
       catch (error) {
         console.error(error)
