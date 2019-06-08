@@ -30,7 +30,7 @@
             </v-layout>
 
             <button v-if="isSelfProfile" @click="profileSettings" class="btn btn2 px-5 mt-2">Ajustes del perfil</button>
-            <button v-else class="btn btn1 px-5 mt-2">Seguir</button>
+            <button v-else class="btn btn1 px-5 mt-2" @click="follow">{{ getBtnFollowText }}</button>
           </p>
         </v-flex>
       </v-layout>
@@ -49,6 +49,7 @@
 
 <script>
 import PostView from './components/PostView'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Profile',
@@ -65,11 +66,11 @@ export default {
     user: null
   }),
 
-  created() {
-    this.getUserData()
-  },
-
   computed: {
+    ...mapGetters({
+      following: 'follow/following'
+    }),
+
     success() {
       return this.$store.state.data.status === 'success' && this.user
     },
@@ -79,6 +80,12 @@ export default {
       return this.user.nick === auth.nick
     },
 
+    getBtnFollowText() {
+      return this.following
+        ? 'Dejar de seguir'
+        : 'Seguir'
+    },
+
     getUserImage() {
       return this.user.image
         ? this.user.image
@@ -86,16 +93,45 @@ export default {
     }
   },
 
+  created() {
+    this.getUserData()
+  },
+
   methods: {
     async getUserData() {
       try {
         const response = await this.$store.dispatch('data/get', `user/${this.id}`)
         this.user = response.data
-        console.log(this.user)
+        this.checkFollowing()
       }
       catch (error) {
         console.error(error)
         // TODO redirect to error view
+      }
+    },
+
+    async follow() {
+      try {
+        if (this.following) {
+          await this.$store.dispatch('follow/unfollow', this.user.id)
+        }
+        else {
+          await this.$store.dispatch('follow/follow', this.user.id)
+        }
+
+        this.$store.commit('follow/okFollowing', !this.following)
+      }
+      catch (error) {
+        console.error(error)
+      }
+    },
+
+    async checkFollowing() {
+      try {
+        await this.$store.dispatch('follow/following', this.user.id)
+      }
+      catch (error) {
+        console.log(error)
       }
     },
 

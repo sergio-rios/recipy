@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
     return next('/login')
   }
 
-  if (from.path === '/' && to.path.match(/^\/recipy\/create$/)) {
+  if (!(from.path === '/' && to.path.match(/^\/recipy\/\d+$/))) {
     store.commit('tag/clear')
     store.commit('search/clear')
   }
