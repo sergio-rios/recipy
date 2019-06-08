@@ -62,7 +62,7 @@ export default {
     getUserImage() {
       return this.getAuthUser().image
         ? this.getAuthUser().image
-        : '/img/user.png'
+        : '/img/user.svg'
     }
   },
 

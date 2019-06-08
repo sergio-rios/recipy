@@ -13,11 +13,6 @@ html { overflow-y: auto; }
   background-size: cover;
 }
 
-.no-link {
-  font-weight: 500;
-  text-decoration: none;
-}
-
 .btn {
   border: 2px solid;
   border-color: $primary-color;
@@ -67,4 +62,13 @@ html { overflow-y: auto; }
 
 .muted-text {
   color: rgba(0, 0, 0, 0.45);
+}
+
+.no-link {
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.no-color {
+  color: $font-color;
 }

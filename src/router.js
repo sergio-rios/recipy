@@ -9,6 +9,9 @@ import Profile from '@/views/user/Profile'
 import Settings from '@/views/user/Settings'
 import Recipy from '@/views/recipy/Recipy'
 import CreateRecipy from '@/views/recipy/CreateRecipy'
+import UserPost from '@/views/user/components/UserPost'
+import UserFollower from '@/views/user/components/UserFollower'
+import UserFollowing from '@/views/user/components/UserFollowing'
 
 Vue.use(Router)
 
@@ -19,7 +22,11 @@ const router = new Router({
     { path: '/', component: Home },
     { path: '/login', component: Login },
     { path: '/new-account', component: NewAccount },
-    { path: '/user/:id', component: Profile, props: true },
+    { path: '/user/:id', component: Profile, props: true, children: [
+      { path: 'posts', component: UserPost },
+      { path: 'followers', component: UserFollower },
+      { path: 'following', component: UserFollowing}
+    ]},
     { path: '/user/:id/settings', component: Settings, props: true },
     { path: '/recipy/create', component: CreateRecipy },
     { path: '/recipy/:id', component: Recipy, props: true },
@@ -40,6 +47,10 @@ router.beforeEach((to, from, next) => {
   if (!(from.path === '/' && to.path.match(/^\/recipy\/\d+$/))) {
     store.commit('tag/clear')
     store.commit('search/clear')
+  }
+
+  if (to.path.match(/^\/user\/\d+$/)) {
+    return next(`${to.path}/posts`)
   }
 
   next()

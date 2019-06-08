@@ -15,17 +15,26 @@
           <h2 class="font-weight-light text-xs-center text-sm-left">@{{ user.nick }}</h2>
           <p class="text-xs-center text-sm-left">
             <v-layout justify-center row mt-2>
+              
               <v-flex class="text-xs-center text-sm-left" xs4>
-                Posts
-                <div class="info-number">{{ user.post.length }}</div>
+                <router-link :to="`/user/${user.id}/posts`" class="no-link no-color">
+                  Posts
+                  <div class="info-number">{{ user.post.length }}</div>
+                </router-link>
               </v-flex>
+              
               <v-flex class="text-xs-center text-sm-left" xs4>
-                Seguidores
-                <div class="info-number">{{ user.follower.length }}</div>
+                <router-link :to="`/user/${user.id}/followers`" class="no-link no-color">
+                  Seguidores
+                  <div class="info-number">{{ user.follower.length }}</div>
+                </router-link>
               </v-flex>
+
               <v-flex class="text-xs-center text-sm-left" xs4>
-                Siguiendo
-                <div class="info-number">{{ user.following.length }}</div>
+                <router-link :to="`/user/${user.id}/following`" class="no-link no-color">
+                  Siguiendo
+                  <div class="info-number">{{ user.following.length }}</div>
+                </router-link>
               </v-flex>
             </v-layout>
 
@@ -34,14 +43,8 @@
           </p>
         </v-flex>
       </v-layout>
-      <hr>
 
-      <!-- POSTS SECTION -->
-      <v-layout row wrap>
-        <v-flex v-for="(post, index) in user.post" :key="index" xs12 sm6 md4>
-          <PostView :post="post"/>
-        </v-flex>
-      </v-layout>
+      <router-view></router-view>
     </v-flex>
   </v-layout>
 </v-container>
@@ -89,7 +92,13 @@ export default {
     getUserImage() {
       return this.user.image
         ? this.user.image
-        : '/img/user.png'
+        : '/img/user.svg'
+    }
+  },
+
+  watch: {
+    '$route.params.id': function (id) {
+      this.getUserData()
     }
   },
 

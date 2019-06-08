@@ -8,6 +8,7 @@ import { file } from './file'
 import { follow } from './follow'
 import { search } from './search'
 import { tag } from './tag'
+import { user } from './user'
 
 Vue.use(Vuex)
 
@@ -18,7 +19,8 @@ export const store = new Vuex.Store({
     file,
     follow,
     search,
-    tag
+    tag,
+    user
   },
   plugins: [createPersistedState({
     paths: ['auth'],
