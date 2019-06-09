@@ -12,6 +12,7 @@ import CreateRecipy from '@/views/recipy/CreateRecipy'
 import UserPost from '@/views/user/components/UserPost'
 import UserFollower from '@/views/user/components/UserFollower'
 import UserFollowing from '@/views/user/components/UserFollowing'
+import News from '@/views/news/News'
 
 Vue.use(Router)
 
@@ -30,6 +31,7 @@ const router = new Router({
     { path: '/user/:id/settings', component: Settings, props: true },
     { path: '/recipy/create', component: CreateRecipy },
     { path: '/recipy/:id', component: Recipy, props: true },
+    { path: '/news', component: News },
   ]
 })
 

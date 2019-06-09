@@ -6,6 +6,7 @@ import { auth } from './auth'
 import { data } from './data'
 import { file } from './file'
 import { follow } from './follow'
+import { news } from './news'
 import { search } from './search'
 import { tag } from './tag'
 import { user } from './user'
@@ -18,6 +19,7 @@ export const store = new Vuex.Store({
     data,
     file,
     follow,
+    news,
     search,
     tag,
     user

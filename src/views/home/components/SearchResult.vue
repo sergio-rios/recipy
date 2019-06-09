@@ -7,6 +7,7 @@
         <span class="nick">
           <router-link :to="`/user/${post.user.id}`" class="no-link">@{{ post.user.nick }}</router-link>
         </span>
+        <span class="muted-text"> &bull; {{ $date(post.created_at) }}</span>
       </v-flex>
 
       <v-flex>
