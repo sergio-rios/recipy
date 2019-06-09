@@ -3,7 +3,6 @@
   <v-layout justify-center wrap>
     <v-flex v-if="success" xs12 sm8 md7 lg6 xl5>
       <v-layout justify-center row wrap>
-
         <v-flex xs12 sm4 md4 xl3>
           <div class="container-avatar">
             <img :src="getUserImage" alt="avatar">
@@ -11,11 +10,13 @@
         </v-flex>
 
         <v-flex xs12 sm8 md8 xl9>
-          <h1 class="font-weight-regular text-xs-center text-sm-left">{{ user.name }}</h1>
+          <h1 class="font-weight-regular text-xs-center text-sm-left">
+            {{ user.name }}
+            <button v-if="isSelfProfile" @click="profileSettings" class="set-btn btn btn2 btn-sm"><i class="fas fa-cog"></i></button>
+          </h1>
           <h2 class="font-weight-light text-xs-center text-sm-left">@{{ user.nick }}</h2>
           <p class="text-xs-center text-sm-left">
-            <v-layout justify-center row mt-2>
-              
+            <v-layout justify-center row mt-2>              
               <v-flex class="text-xs-center text-sm-left" xs4>
                 <router-link :to="`/user/${user.id}/posts`" class="no-link no-color">
                   Posts
@@ -38,8 +39,14 @@
               </v-flex>
             </v-layout>
 
-            <button v-if="isSelfProfile" @click="profileSettings" class="btn btn2 px-5 mt-2">Ajustes del perfil</button>
-            <button v-else class="btn btn1 px-5 mt-2" @click="follow">{{ getBtnFollowText }}</button>
+            <v-layout v-if="user.description" justify-center row mt-3>              
+              <v-flex class="text-xs-center text-sm-left">
+                <p>{{ user.description }}</p>
+              </v-flex>
+            </v-layout>
+
+            
+            <button v-if="!isSelfProfile" class="btn btn1 mt-2" @click="follow">{{ getBtnFollowText }}</button>
           </p>
         </v-flex>
       </v-layout>
@@ -178,5 +185,10 @@ hr {
 .info-number {
   font-size: 1.6rem;
   font-weight: bold;
+}
+
+.set-btn {
+  position: relative;
+  bottom: 4px;
 }
 </style>

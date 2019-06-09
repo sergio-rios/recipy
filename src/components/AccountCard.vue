@@ -33,14 +33,17 @@
         <v-divider></v-divider>
 
         <v-card-actions>
-          <v-layout justify-space-between>
+          <v-layout justify-space-around>
             <v-flex xs5>
               <router-link :to="`/user/${getAuthUser().id}`">
                 <button @click="menu = false" class="btn btn1 w-100">Ver perfil</button>
               </router-link>
             </v-flex>
             <v-flex xs5>
-              <button @click="logout" class="btn btn2 w-100">Cerrar sesión</button>
+              <button @click="logout" class="btn btn2 w-100">
+                Salir
+                <i class="fas fa-sign-out-alt"></i>
+              </button>
             </v-flex>
           </v-layout>
         </v-card-actions>

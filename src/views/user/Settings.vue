@@ -124,7 +124,7 @@ export default {
     getUserImage() {
       return !!this.user.image
         ? this.user.image
-        : '/img/user.png'
+        : '/img/user.svg'
     },
 
     disabled() {

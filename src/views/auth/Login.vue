@@ -3,7 +3,7 @@
   <v-layout align-center justify-center>
     <v-flex xs12 sm8 md4 xl3>
       <div class="card">
-        <h1>Recipy</h1>
+        <h1 class="mb-4">Recipy</h1>
         <v-form @submit.prevent="login">
           <v-text-field
             v-model="user.email"
@@ -136,7 +136,7 @@ h1 { font-weight: lighter; }
 .card {
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 10px;
-  padding: 3rem 3rem;
+  padding: 1rem 2rem;
 }
 
 .app-logo {

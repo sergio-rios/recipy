@@ -17,7 +17,7 @@ html { overflow-y: auto; }
   border: 2px solid;
   border-color: $primary-color;
   border-radius: 50px;
-  padding: 0.3rem 1.3rem;
+  padding: 0.3rem 2rem;
   font-size: 1.1rem;
   transition: all 300ms;
 }
@@ -39,6 +39,11 @@ html { overflow-y: auto; }
     border-color: darken($primary-color, 6%);
     color: darken($primary-color, 6%);
   }
+}
+
+.btn-sm {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
 }
 
 .btn-disabled {
