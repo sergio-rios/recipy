@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
+import { admin } from './admin'
 import { auth } from './auth'
 import { data } from './data'
 import { file } from './file'
@@ -15,6 +16,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   modules: {
+    admin,
     auth,
     data,
     file,

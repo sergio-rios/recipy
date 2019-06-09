@@ -13,6 +13,7 @@ import UserPost from '@/views/user/components/UserPost'
 import UserFollower from '@/views/user/components/UserFollower'
 import UserFollowing from '@/views/user/components/UserFollowing'
 import News from '@/views/news/News'
+import AdminPanel from '@/views/admin/AdminPanel'
 
 Vue.use(Router)
 
@@ -32,6 +33,7 @@ const router = new Router({
     { path: '/recipy/create', component: CreateRecipy },
     { path: '/recipy/:id', component: Recipy, props: true },
     { path: '/news', component: News },
+    { path: '/admin', component: AdminPanel },
   ]
 })
 
@@ -44,6 +46,10 @@ router.beforeEach((to, from, next) => {
 
   if (isPrivate && !authUser) {
     return next('/login')
+  }
+
+  if (to.path === '/admin' && (!authUser || authUser.profile_id != 1)) {
+    return next('/')
   }
 
   if (!(from.path === '/' && to.path.match(/^\/recipy\/\d+$/))) {

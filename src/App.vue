@@ -22,6 +22,15 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+
+        <v-list-tile v-if="authAdmin" to="/admin">
+          <v-list-tile-action>
+            <v-icon>fas fa-users-cog</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Administración</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
       <v-footer class="justify-center pl-0" color="" inset app>
         <span>&copy; {{ new Date().getFullYear() }} Recipy</span>
@@ -79,12 +88,17 @@ export default {
       
       return !notUI.includes(this.$route.path)
     },
+
     wallpaper() {
       const wallpaper = ['/login', '/new-account']
 
       return {
         wallpaper: wallpaper.includes(this.$route.path)
       }
+    },
+
+    authAdmin() {
+      return this.$store.getters['auth/user'].profile_id === 1
     }
   }
 }
