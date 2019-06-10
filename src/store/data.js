@@ -29,7 +29,7 @@ export const data = {
         const response = await axios.post(`${apiURL}/${params.path}`, params.data)
         commit('success')
         commit('alert/setAlert', {
-          text: 'Publicado correctamente',
+          text: 'Operación completada',
           type: 'success',
         }, { root: true});
         return response

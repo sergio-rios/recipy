@@ -30,10 +30,10 @@ export default function HttpInterceptor() {
 
             case 401:
               router.push('/login')
-              store.commit('alert/setAlert', {
-                text: 'La sesión ha caducado.',
-                type: 'error'
-              })
+              // store.commit('alert/setAlert', {
+              //   text: 'La sesión ha caducado.',
+              //   type: 'error'
+              // })
               break
 
             case 500:

@@ -14,6 +14,7 @@ import UserFollower from '@/views/user/components/UserFollower'
 import UserFollowing from '@/views/user/components/UserFollowing'
 import News from '@/views/news/News'
 import AdminPanel from '@/views/admin/AdminPanel'
+import Verify from '@/views/auth/Verify'
 
 Vue.use(Router)
 
@@ -24,6 +25,7 @@ const router = new Router({
     { path: '/', component: Home },
     { path: '/login', component: Login },
     { path: '/new-account', component: NewAccount },
+    { path: '/verify', component: Verify },
     { path: '/user/:id', component: Profile, props: true, children: [
       { path: 'posts', component: UserPost },
       { path: 'followers', component: UserFollower },
@@ -41,12 +43,20 @@ const router = new Router({
 // Comprobar antes de servir la vista si es privada
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const publicRoutes = ['/login']
+  const publicRoutes = ['/login', '/new-account']
   const isPrivate = !publicRoutes.includes(to.path)
-  const authUser = store.state.auth.auth
+  const authUser = store.getters['auth/user']
+
+  if (to.path === '/login') {
+    store.commit('auth/logout')
+  }
 
   if (isPrivate && !authUser) {
     return next('/login')
+  }
+
+  if (authUser && authUser.verified === 0 && to.path != '/verify') {
+    return next('/verify')
   }
 
   // if (to.path === '/admin' && (!authUser || authUser.profile_id != 1)) {

@@ -16,8 +16,7 @@ export const auth = {
 
   getters: {
     user: state => state.auth.user,
-    token: state => state.auth.token,
-    try: state => state.auth.try
+    token: state => state.auth.token
   },
 
   actions: {
@@ -44,6 +43,16 @@ export const auth = {
         const timeout = (response.data.expires - 600) * 1000
         state.timer = setTimeout(dispatch, timeout, 'refresh')
         commit('authSuccess', response.data)
+      }
+      catch (error) {
+        commit('authError')
+        throw error.response.data
+      }
+    },
+
+    async resend({ commit }, id) {
+      try {   
+        await axios.get(`${apiURL}/user/${id}/resend-verification`)
       }
       catch (error) {
         commit('authError')

@@ -162,7 +162,7 @@ export default {
           path: 'user',
           data: this.user
         })
-        this.$router.go(-1)
+        this.$router.push('/verify')
       }
       catch (error) {
         console.log(error.error)

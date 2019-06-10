@@ -106,11 +106,12 @@ export default {
     }
   },
 
-  beforeCreate() {
-    if (!this.$store.getters['auth/user']) {
-      this.$router.push('/login')
-    }
-  }
+  // beforeCreate() {
+  //   if (!this.$store.getters['auth/user']) {
+  //     console.log('del app')
+  //     this.$router.push('/login')
+  //   }
+  // }
 }
 </script>
 

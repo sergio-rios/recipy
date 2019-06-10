@@ -105,11 +105,18 @@ export default {
 
       try {
         await this.$store.dispatch("auth/login", this.user)
-        this.$router.push('/')
+
         if (this.user.remember) {
           window.localStorage.setItem('rememberedUser', JSON.stringify(this.user))
         } else {
           window.localStorage.removeItem('rememberedUser')
+        }
+
+        if (this.$store.getters['auth/user'].verify) {
+          this.$router.push('/')
+        }
+        else {
+          this.$router.push('/verify')
         }
       }
       catch (error) {
