@@ -37,11 +37,11 @@ export default {
       try {
         if (!this.isLiked) {
           this.isLiked = !this.isLiked
-          await LikeService.like({ post_id: this.postId })
+          await this.$store.dispatch('like/like', this.postId)
         }
         else {
           this.isLiked = !this.isLiked
-          const response = await LikeService.unlike(this.postId)
+          await thie.$store.dispatch('like/unlike', this.postId)
         }
       }
       catch (error) {
@@ -52,10 +52,13 @@ export default {
 
     checkIfLiked() {
       const authUser = this.$store.getters['auth/user']
-      this.currentLike = this.postLikes.filter(like => like.user_id === authUser.id)[0]
+      this.currentLike = this.postLikes.some(like => like.user_id === authUser.id)
 
       if (this.currentLike) {
         this.isLiked = true
+      }
+      else {
+        this.isLiked = false
       }
     }
   }

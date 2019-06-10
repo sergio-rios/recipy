@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const apiURL = process.env.VUE_APP_API_URL
 
-export const data = {
+export const like = {
   namespaced: true,
 
   state: {
@@ -10,19 +10,27 @@ export const data = {
   },
 
   actions: {
-    async get({ commit }, data) {
+    async like({ commit }, id) {
       try {
         commit('loading')
-        const token = store.state.auth.auth.token
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        
-        const response = await axios.get(`${apiURL}${path}`)
+        await axios.post(`${apiURL}/like`, {
+          post_id: id
+        })
         commit('success')
-        return response
       }
       catch (error) {
-        commit('failure')
-        throw error.response.data.code
+        console.log(error.response)
+      }
+    },
+
+    async unlike({ commit }, id) {
+      try {
+        commit('loading')
+        await axios.delete(`${apiURL}/like/${id}`)
+        commit('success')
+      }
+      catch (error) {
+        //
       }
     }
   },

@@ -98,7 +98,14 @@ export default {
     },
 
     authAdmin() {
-      return this.$store.getters['auth/user'].profile_id === 1
+      const authUser = this.$store.getters['auth/user']
+      return !!authUser && authUser.profile_id === 1
+    }
+  },
+
+  beforeCreate() {
+    if (!this.$store.getters['auth/user']) {
+      this.$router.push('/login')
     }
   }
 }

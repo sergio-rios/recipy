@@ -88,8 +88,7 @@ export default {
   methods: {
     async getComments() {
       try {
-        const response = await CommentService.getAll(this.post.id);
-        console.log(response)
+        const response = await CommentService.getAll(this.post.id)
         this.commentsList = response.data
       }
       catch (error) {
