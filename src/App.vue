@@ -57,6 +57,7 @@
 
     <!-- MAIN CONTENT -->
     <v-content :class="wallpaper">
+      <Alert />
       <v-fade-transition mode="out-in">
         <router-view></router-view>
       </v-fade-transition>
@@ -65,6 +66,7 @@
 </template>
 
 <script>
+import Alert from '@/components/Alert'
 import AccountCard from '@/components/AccountCard'
 import { menu } from '@/config/index'
 
@@ -74,6 +76,7 @@ export default {
   },
 
   components: {
+    Alert,
     AccountCard
   },
 

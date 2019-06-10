@@ -28,6 +28,10 @@ export const data = {
         commit('loading')        
         const response = await axios.post(`${apiURL}/${params.path}`, params.data)
         commit('success')
+        commit('alert/setAlert', {
+          text: 'Publicado correctamente',
+          type: 'success',
+        }, { root: true});
         return response
       }
       catch (error) {

@@ -158,6 +158,10 @@ export default {
         })
         this.$store.commit('auth/userChange', response.data)
         this.goBack()
+        this.$store.commit('alert/setAlert', {
+          text: 'Perfil actualizado con éxito.',
+          type: 'success'
+        })
       }
       catch (error) {
         throw error
