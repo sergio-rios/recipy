@@ -47,7 +47,7 @@
       app
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <img src="@/assets/logo.svg" class="app-logo" style="width: 28px;" alt="app logo">
+      <img src="@/assets/logo.png" class="app-logo" style="width: 32px;" alt="app logo">
       <v-toolbar-title class="mr-5 align-center">
         <span>Recipy</span>
       </v-toolbar-title>

@@ -4,7 +4,15 @@
     <v-flex xs12 sm6 lg4>
       <v-layout justify-center>        
         <v-flex>
-          <h1 class="big-header mt-3 mb-3">Recipy</h1>
+          <v-layout align-center>
+            <v-flex xs3 md2>
+              <img src="@/assets/logo.png" class="app-logo" style="width: 64px;" alt="app logo">
+            </v-flex>
+            <v-flex>
+              <h1 class="big-header mt-3 mb-3">Recipy</h1>
+            </v-flex>
+          </v-layout>
+
           <v-autocomplete
             v-model="selectedTags"
             :items="tags"
@@ -136,6 +144,10 @@ export default {
 </script>
 
 <style scoped>
+.app-logo {
+  margin-top: 8px;
+}
+
 .big-header {
   font-size: 4rem;
   font-weight: 300;
