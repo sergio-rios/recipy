@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { store } from '@/store/store'
 
 const apiURL = process.env.VUE_APP_API_URL
 
@@ -20,8 +19,6 @@ export const news = {
     async getNews({ commit }) {      
       try {
         commit('loading')
-        const token = store.getters['auth/token']
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         const response = await axios.get(`${apiURL}/news`)
         commit('okNews', response.data)
       }

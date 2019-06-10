@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { store } from '@/store/store'
 
 const apiURL = process.env.VUE_APP_API_URL
 
@@ -20,8 +19,6 @@ export const admin = {
     async getUsers({ commit }) {      
       try {
         commit('loading')
-        const token = store.getters['auth/token']
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         const response = await axios.get(`${apiURL}/user`)
         commit('okUsers', response.data)
       }
@@ -33,8 +30,6 @@ export const admin = {
 
     async enable({ commit }, params) {
       try {
-        const token = store.getters['auth/token']
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         await axios.put(`${apiURL}/user/${params.id}`, {
           enabled: params.enable
         })

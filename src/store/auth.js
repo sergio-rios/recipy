@@ -9,20 +9,25 @@ export const auth = {
     status: 'loggedOut',
     auth: {
       user: null,
-      token: null
-    }
+      token: null,
+    },
+    timer: null
   },
 
   getters: {
     user: state => state.auth.user,
-    token: state => state.auth.token
+    token: state => state.auth.token,
+    try: state => state.auth.try
   },
 
   actions: {
-    async login({ commit }, user) {
+    async login({ commit, dispatch, state }, user) {
       try {
         commit('authRequest')
         const response = await axios.post(`${apiURL}/login`, user)
+        // Refresh token 10 min before expires
+        const timeout = (response.data.expires - 600) * 1000
+        state.timer = setTimeout(dispatch, timeout, 'refresh')
         commit('authSuccess', response.data)
       }
       catch (error) {
@@ -31,13 +36,19 @@ export const auth = {
       }
     },
 
-    async edit({ commit }, user) {
-      commit('authUserChange', user)
-    },
-
-    logout({commit}) {
-      delete axios.defaults.headers.common['Authorization']
-      commit('logout')
+    async refresh({ commit, dispatch, state }) {
+      try {
+        commit('authRequest')        
+        const response = await axios.get(`${apiURL}/token/refresh`)
+        // Refresh token 10 min before expires
+        const timeout = (response.data.expires - 600) * 1000
+        state.timer = setTimeout(dispatch, timeout, 'refresh')
+        commit('authSuccess', response.data)
+      }
+      catch (error) {
+        commit('authError')
+        throw error.response.data
+      }
     }
   },
 
@@ -52,17 +63,17 @@ export const auth = {
       state.auth.token = data.token
     },
 
-    authUserChange(state, user) {
+    userChange(state, user) {
       state.auth.user = user
     },
 
     authError(state) {
       state.status = 'logginError'
-      state.auth.user = null
-      state.auth.token = null
     },
 
     logout(state) {
+      clearTimeout(state.timer)
+      delete axios.defaults.headers.common['Authorization']
       state.status = 'loggedOut'
       state.auth.user = null
       state.auth.token = null

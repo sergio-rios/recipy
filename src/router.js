@@ -34,6 +34,7 @@ const router = new Router({
     { path: '/recipy/:id', component: Recipy, props: true },
     { path: '/news', component: News },
     { path: '/admin', component: AdminPanel },
+    { path: '*', redirect: '/' }
   ]
 })
 
@@ -48,9 +49,9 @@ router.beforeEach((to, from, next) => {
     return next('/login')
   }
 
-  if (to.path === '/admin' && (!authUser || authUser.profile_id != 1)) {
-    return next('/')
-  }
+  // if (to.path === '/admin' && (!authUser || authUser.profile_id != 1)) {
+  //   return next('/')
+  // }
 
   if (!(from.path === '/' && to.path.match(/^\/recipy\/\d+$/))) {
     store.commit('tag/clear')

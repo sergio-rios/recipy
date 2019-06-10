@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { store } from '@/store/store'
 
 const apiURL = process.env.VUE_APP_API_URL
 
@@ -19,10 +18,7 @@ export const follow = {
   actions: {
     async follow({ commit }, id) {
       try {
-        commit('loading')
-        const token = store.state.auth.auth.token
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        
+        commit('loading')        
         await axios.post(`${apiURL}/follow/follow/${id}`)
         commit('okFollow')
       }
@@ -34,10 +30,7 @@ export const follow = {
 
     async unfollow({ commit }, id) {
       try {
-        commit('loading')
-        const token = store.state.auth.auth.token
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        
+        commit('loading')        
         await axios.delete(`${apiURL}/follow/unfollow/${id}`)
         commit('okUnFollow',)
       }
@@ -49,10 +42,7 @@ export const follow = {
 
     async following({ commit }, id) {
       try {
-        commit('loading')
-        const token = store.state.auth.auth.token
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        
+        commit('loading')        
         const response = await axios.get(`${apiURL}/follow/following/${id}`)
         commit('okFollowing', response.data)
       }

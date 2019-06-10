@@ -5,6 +5,9 @@ import router from './router'
 import { store } from './store/store'
 import { lang, date } from './helpers/index'
 import CKEditor from '@ckeditor/ckeditor5-vue';
+import HttpInterceptor from '@/helpers/interceptor'
+
+HttpInterceptor()
 
 Vue.use(CKEditor)
 Vue.use(date)

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { store } from '@/store/store'
 
 const apiURL = process.env.VUE_APP_API_URL
 
@@ -26,8 +25,6 @@ export const user = {
     async getUser({ commit }, id) {      
       try {
         commit('loading')
-        const token = store.getters['auth/token']
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         const response = await axios.get(`${apiURL}/user/${id}`)
         commit('okUser', response.data)
       }
@@ -40,8 +37,6 @@ export const user = {
     async getPosts({ commit }, id) {      
       try {
         commit('loading')
-        const token = store.getters['auth/token']
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         const response = await axios.get(`${apiURL}/user/${id}/post`)
         commit('okPosts', response.data)
       }
@@ -54,8 +49,6 @@ export const user = {
     async getFollowers({ commit }, id) {      
       try {
         commit('loading')
-        const token = store.getters['auth/token']
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         const response = await axios.get(`${apiURL}/user/${id}/follower`)
         commit('okFollowers', response.data)
       }
@@ -68,8 +61,6 @@ export const user = {
     async getFollowing({ commit }, id) {      
       try {
         commit('loading')
-        const token = store.getters['auth/token']
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         const response = await axios.get(`${apiURL}/user/${id}/following`)
         commit('okFollowing', response.data)
       }

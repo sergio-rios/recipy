@@ -156,7 +156,7 @@ export default {
           path: `user/${this.user.id}`,
           data: this.user
         })
-        this.$store.dispatch('auth/edit', response.data)
+        this.$store.commit('auth/userChange', response.data)
         this.goBack()
       }
       catch (error) {

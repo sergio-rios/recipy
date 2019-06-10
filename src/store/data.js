@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { store } from '@/store/store'
 
 const apiURL = process.env.VUE_APP_API_URL
 
@@ -13,10 +12,7 @@ export const data = {
   actions: {
     async get({ commit }, path) {
       try {
-        commit('loading')
-        const token = store.state.auth.auth.token
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        
+        commit('loading')        
         const response = await axios.get(`${apiURL}/${path}`)
         commit('success')
         return response
@@ -29,10 +25,7 @@ export const data = {
 
     async create({ commit }, params) {
       try {
-        commit('loading')
-        const token = store.state.auth.auth.token
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        
+        commit('loading')        
         const response = await axios.post(`${apiURL}/${params.path}`, params.data)
         commit('success')
         return response
@@ -45,10 +38,7 @@ export const data = {
 
     async update({ commit }, params) {
       try {
-        commit('loading')
-        const token = store.state.auth.auth.token
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        
+        commit('loading')        
         const response = await axios.put(`${apiURL}/${params.path}`, params.data)
         commit('success')
         return response
@@ -61,10 +51,7 @@ export const data = {
 
     async delete({ commit }, path) {
       try {
-        commit('loading')
-        const token = store.state.auth.auth.token
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-        
+        commit('loading')        
         const response = await axios.put(`${apiURL}/${path}`)
         commit('success')
         return response
