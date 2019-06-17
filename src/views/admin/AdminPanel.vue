@@ -16,6 +16,11 @@
           <v-btn icon flat @click="getData">
             <v-icon color="primary" small>fas fa-sync-alt {{ isLoading ? 'fa-spin' : '' }}</v-icon>
           </v-btn>
+          <a href="http://recipy.com/pdf/users" target="blank">
+            <v-btn icon flat>
+              <v-icon color="primary">fas fa-file-pdf</v-icon>
+            </v-btn>
+          </a>
         </v-card-title>
         <v-data-table
           :headers="headers"
