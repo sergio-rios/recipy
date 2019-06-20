@@ -10,6 +10,8 @@
   multiple
   return-object
   dense
+  required
+  :rules="ingredientsRules"
 >
   <template v-slot:selection="data">
     <v-chip
@@ -37,6 +39,12 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'TagSelector',
 
+  data: () => ({
+    ingredientsRules: [
+      v => !!v || 'Campo requerido'
+    ]
+  }),
+
   computed: {
     ...mapGetters({
       tags: 'tag/tags',
@@ -50,7 +58,7 @@ export default {
       set(items) {
         this.$store.commit('tag/set', items)
       }
-    }
+    },
   },
 
   created() {

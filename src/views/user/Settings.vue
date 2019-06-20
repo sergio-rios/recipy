@@ -6,6 +6,7 @@
         @submit.prevent="save"
         v-model="valid"
         lazy-validation
+        ref="form"
       >
       <h2 class="text-xs-center my-4">{{ $text(4, 1, 1) }}</h2>
         <!-- <div class="container-avatar">
@@ -89,30 +90,30 @@ export default {
     user: null,
     valid: true,
     nickRules: [
-      v => !!v || 'Nick is required',
-      v => (v && v.length <= 20) || 'Nick must be less than 10 characters',
+      v => !!v || 'Campo requerido.',
+      v => (v && v.length <= 20) || 'El usuario no puede tener más de 20 caracteres',
       v => {
         const pattern = /^[A-Za-z0-9\._]+$/
-        return pattern.test(v) || 'Invalid nicknname.'
+        return pattern.test(v) || 'Solo se permiten letras, números, puntos y guiones bajos.'
       }
     ],
     nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 40) || 'Name must be less than 10 characters',
+      v => !!v || 'Campo requerido.',
+      v => (v && v.length <= 40) || 'El nombre no puede tener más de 40 caracteres',
       v => {
-        const pattern = /^[A-Za-z0-9ÁÉÍÓÚÜÑáéíóúüñ\s]+$/
-        return pattern.test(v) || 'Invalid nicknname.'
+        const pattern = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/
+        return pattern.test(v) || 'El campo solo puede contener letras'
       }
     ],
     emailRules: [
-      v => !!v || 'E-mail is required',
+      v => !!v || 'Campo requerido.',
       v => {
         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return pattern.test(v) || 'Invalid e-mail.'
+        return pattern.test(v) || 'E-mail no válido'
       }
     ],
     descriptionRules: [
-      v => (!v ||v.length <= 200) || 'Name must be less than 240 characters',
+      v => (!v ||v.length <= 200) || 'La biografía no puede tener más de 200 caracteres',
     ],
   }),
 
@@ -150,21 +151,23 @@ export default {
 
   methods: {
     async save() {
-      try {
-        this.user.image = this.image 
-        const response = await this.$store.dispatch('data/update', {
-          path: `user/${this.user.id}`,
-          data: this.user
-        })
-        this.$store.commit('auth/userChange', response.data)
-        this.goBack()
-        this.$store.commit('alert/setAlert', {
-          text: 'Perfil actualizado con éxito.',
-          type: 'success'
-        })
-      }
-      catch (error) {
-        throw error
+      if(this.$refs.form.validate()) {
+        try {
+          this.user.image = this.image 
+          const response = await this.$store.dispatch('data/update', {
+            path: `user/${this.user.id}`,
+            data: this.user
+          })
+          this.$store.commit('auth/userChange', response.data)
+          this.goBack()
+          this.$store.commit('alert/setAlert', {
+            text: 'Perfil actualizado con éxito.',
+            type: 'success'
+          })
+        }
+        catch (error) {
+          console.log(error)
+        }
       }
     },
 

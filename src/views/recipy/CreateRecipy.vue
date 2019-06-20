@@ -6,6 +6,7 @@
         @submit.prevent="create"
         v-model="valid"
         lazy-validation
+        ref="form"
       >
       <h2 class="text-xs-center my-4">Crear recipy</h2>
 
@@ -72,7 +73,7 @@ export default {
       image: null
     },
     titleRules: [
-      v => !!v || 'El título no puede estar vacio',
+      v => !!v || 'Campo requerido',
       v => (v && v.length <= 40) || 'El título supera los 40 caracteres',
     ],
     editor: ClassicEditor,
@@ -109,20 +110,22 @@ export default {
 
   methods : {
     async create() {
-      try {
-        this.post.image = this.image
-        this.post.tags = this.$store.getters['tag/selected'].map(tag => tag.id)
-        console.log(this.post)
-        const response = await this.$store.dispatch('data/create', {
-          path: 'post',
-          data: this.post
-        })
-        const recipyID = response.data.id
-        this.$router.push(`/recipy/${recipyID}`)
-      }
-      catch (error) {
-        console.log(error)
-        this.errors = error.error
+      if(this.$refs.form.validate()) {
+        try {
+          this.post.image = this.image
+          this.post.tags = this.$store.getters['tag/selected'].map(tag => tag.id)
+          console.log(this.post)
+          const response = await this.$store.dispatch('data/create', {
+            path: 'post',
+            data: this.post
+          })
+          const recipyID = response.data.id
+          this.$router.push(`/recipy/${recipyID}`)
+        }
+        catch (error) {
+          console.log(error)
+          this.errors = error.error
+        }
       }
     }
   }

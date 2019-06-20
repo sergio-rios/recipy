@@ -8,6 +8,7 @@
           @submit.prevent="create"
           v-model="valid"
           lazy-validation
+          ref="form"
         >
           <v-text-field
             v-model="user.nick"
@@ -104,31 +105,31 @@ export default {
     errors : {},
     valid: false,
     nickRules: [
-      v => !!v || 'Nick is required',
-      v => (v && v.length <= 20) || 'Nick must be less than 20 characters',
+      v => !!v || 'Campo requerido.',
+      v => (v && v.length <= 20) || 'El usuario debe tener menos de 20 caracteres',
       v => {
         const pattern = /^[A-Za-z0-9\._]+$/
         return pattern.test(v) || 'Invalid nicknname.'
       }
     ],
     nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 40) || 'Name must be less than 40 characters',
+      v => !!v || 'Campo requerido.',
+      v => (v && v.length <= 40) || 'El usuario debe tener menos de 40 caracteres',
       v => {
         const pattern = /^[A-Za-z0-9ÁÉÍÓÚÜÑáéíóúüñ\s]+$/
-        return pattern.test(v) || 'Invalid nicknname.'
+        return pattern.test(v) || 'Solo puede contener letras..'
       }
     ],
     emailRules: [
-      v => !!v || 'E-mail is required',
+      v => !!v || 'Campo requerido.',
       v => {
         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return pattern.test(v) || 'Invalid e-mail.'
+        return pattern.test(v) || 'E-mail no válido.'
       }
     ],
     passwordRules: [
-      v => !!v || 'Pass is required',
-      v => (v && v.length >= 4) || 'Pass must be less than 4 characters',
+      v => !!v || 'Campo requerido.',
+      v => (v && v.length >= 4) || 'La contraseña debe tener más de 4 caracteres',
     ],
   }),
 
@@ -141,7 +142,7 @@ export default {
 
     passrepeatRules() {
       return [(this.user.password_confirmation == this.user.password)
-        || 'Pass must be igual']
+        || 'Las contraseñas no coinciden']
     },
 
     loading() {
@@ -157,16 +158,18 @@ export default {
 
   methods: {
     async create() {
-      try {
-        const response = await this.$store.dispatch('data/create', {
-          path: 'user',
-          data: this.user
-        })
-        this.$router.push('/verify')
-      }
-      catch (error) {
-        console.log(error.error)
-        this.errors = error.error
+      if(this.$refs.form.validate()) {
+        try {
+          const response = await this.$store.dispatch('data/create', {
+            path: 'user',
+            data: this.user
+          })
+          this.$router.push('/verify')
+        }
+        catch (error) {
+          console.log(error.error)
+          this.errors = error.error
+        }
       }
     }
   }
