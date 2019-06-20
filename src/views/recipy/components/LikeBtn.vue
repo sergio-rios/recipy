@@ -41,12 +41,12 @@ export default {
         }
         else {
           this.isLiked = !this.isLiked
-          await thie.$store.dispatch('like/unlike', this.postId)
+          await this.$store.dispatch('like/unlike', this.postId)
         }
       }
       catch (error) {
         this.isLiked = !this.isLiked
-        console.error(error.response)
+        console.error(error)
       }
     },
 

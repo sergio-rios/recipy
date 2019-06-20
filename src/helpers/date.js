@@ -1,5 +1,5 @@
 export const date = {
-  install(Vue, options) {
+  install(Vue) {
     Vue.prototype.$date = (_date) => {
       const date =  new Date(_date)
       const today = new Date()

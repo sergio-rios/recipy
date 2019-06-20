@@ -12,6 +12,7 @@ import { like } from './like'
 import { news } from './news'
 import { search } from './search'
 import { tag } from './tag'
+import { trends } from './trends'
 import { user } from './user'
 
 Vue.use(Vuex)
@@ -28,6 +29,7 @@ export const store = new Vuex.Store({
     news,
     search,
     tag,
+    trends,
     user
   },
   plugins: [createPersistedState({
