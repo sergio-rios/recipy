@@ -36,6 +36,9 @@ export default function HttpInterceptor() {
               // })
               break
 
+            case 400:
+              break
+
             case 500:
               store.commit('alert/setAlert', {
                 text: 'El servidor no response. Inténtalo más tarde.',

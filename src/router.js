@@ -16,6 +16,7 @@ import News from '@/views/news/News'
 import Trends from '@/views/trends/Trends'
 import AdminPanel from '@/views/admin/AdminPanel'
 import Verify from '@/views/auth/Verify'
+import Password from '@/views/user/Password'
 
 Vue.use(Router)
 
@@ -33,6 +34,7 @@ const router = new Router({
       { path: 'following', component: UserFollowing}
     ]},
     { path: '/user/:id/settings', component: Settings, props: true },
+    { path: '/user/settings/password', component: Password },
     { path: '/recipy/create', component: CreateRecipy },
     { path: '/recipy/:id', component: Recipy, props: true },
     { path: '/news', component: News },

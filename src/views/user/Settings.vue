@@ -45,6 +45,12 @@
           required
         ></v-text-field>
 
+        <div class="v-input v-text-field mb-4"> 
+          <div class="v-input__control">
+            <router-link to="/user/settings/password">Cambiar contraseña</router-link>
+          </div>
+        </div>
+
         <v-textarea
           v-model="user.description"
           :label="$text(4, 1, 5)"
@@ -146,7 +152,7 @@ export default {
   },
 
   created() {
-    this.user = Object.assign({}, this.$store.state.auth.auth.user)
+    this.user = Object.assign({}, this.$store.getters['auth/user'])
   },
 
   methods: {
