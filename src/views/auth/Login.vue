@@ -112,10 +112,11 @@ export default {
           window.localStorage.removeItem('rememberedUser')
         }
 
-        if (this.$store.getters['auth/user'].verify) {
+        if (this.$store.getters['auth/user'].verified) {
           this.$router.push('/')
         }
         else {
+          console.log('else')
           this.$router.push('/verify')
         }
       }

@@ -2,7 +2,11 @@
 <section>
   <v-divider class="my-4"></v-divider>
   <v-layout row wrap>
-    <v-flex v-if="isLoading">
+    <v-flex v-for="(post, index) in posts" :key="index" xs12 sm6 md4>
+      <PostView :post="post"/>
+    </v-flex>
+
+    <v-flex v-if="isLoading" class="mt-4">
       <v-layout>
         <v-spacer></v-spacer>
         <v-progress-circular
@@ -13,10 +17,6 @@
         ></v-progress-circular>
         <v-spacer></v-spacer>
       </v-layout>
-    </v-flex>
-
-    <v-flex v-else v-for="(post, index) in posts" :key="index" xs12 sm6 md4>
-      <PostView :post="post"/>
     </v-flex>
   </v-layout>
 </section>
@@ -52,9 +52,34 @@ export default {
     this.getData()
   },
 
+  mounted() {
+    this.scroll(this.person)
+  },
+
   methods: {
     async getData() {
-      await this.$store.dispatch('user/getPosts', this.userId)
+      await this.$store.dispatch('user/getPosts', {
+        id: this.userId,
+        init: 0,
+        num: 12,
+      })
+    },
+
+    async getMoreData() {
+      await this.$store.dispatch('user/getPosts', {
+        id: this.userId,
+        init: this.posts.length,
+        num: 6,
+      })
+    },
+
+    scroll (person) {
+      window.onscroll = () => {
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
+        if (bottomOfWindow) {
+          this.getMoreData()
+        }
+      }
     }
   }
 }

@@ -34,10 +34,10 @@ export const user = {
       }
     },
 
-    async getPosts({ commit }, id) {      
+    async getPosts({ commit }, params) {      
       try {
         commit('loading')
-        const response = await axios.get(`${apiURL}/user/${id}/post`)
+        const response = await axios.get(`${apiURL}/user/${params.id}/post/${params.init}/${params.num}`)
         commit('okPosts', response.data)
       }
       catch (error) {
@@ -82,7 +82,7 @@ export const user = {
     },
 
     okPosts(state, data) {
-      state.posts = data
+      data.forEach(post => state.posts.push(post))
       state.status = 'success'
     },
 

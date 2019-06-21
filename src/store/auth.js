@@ -43,6 +43,7 @@ export const auth = {
         const timeout = (response.data.expires - 600) * 1000
         state.timer = setTimeout(dispatch, timeout, 'refresh')
         commit('authSuccess', response.data)
+        console.log('refresh')
       }
       catch (error) {
         commit('authError')

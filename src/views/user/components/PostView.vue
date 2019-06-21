@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'Postview',
+  name: 'PostView',
 
   props: {
     post: Object
