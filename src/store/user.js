@@ -86,6 +86,10 @@ export const user = {
       state.status = 'success'
     },
 
+    clearPost(state) {
+      state.posts = []
+    },
+
     okFollowers(state, data) {
       state.followers = data
       state.status = 'success'

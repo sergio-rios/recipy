@@ -122,12 +122,14 @@ export default {
 
   created() {
     this.getData()
+    
   },
 
   methods : {
     async getData() {
       try {
         const response = await this.$store.dispatch('data/get', `post/${this.id}`)
+        console.log('hola')
         this.recipy = response.data
       }
       catch (error) {

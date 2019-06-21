@@ -49,11 +49,16 @@ export default {
   },
 
   created() {
+    this.$store.commit('user/clearPost')
     this.getData()
   },
 
   mounted() {
     this.scroll(this.person)
+  },
+
+  destroyed() {
+    window.onscroll = null
   },
 
   methods: {

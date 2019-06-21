@@ -27,7 +27,7 @@
               <v-flex class="text-xs-center text-sm-left" xs4>
                 <router-link :to="`/user/${user.id}/followers`" class="no-link no-color">
                   Seguidores
-                  <div class="info-number">{{ user.follower.length }}</div>
+                  <div class="info-number" ref="follower_num">{{ user.follower.length }}</div>
                 </router-link>
               </v-flex>
 
@@ -130,9 +130,11 @@ export default {
       try {
         if (this.following) {
           await this.$store.dispatch('follow/unfollow', this.user.id)
+          this.$refs.follower_num.innerHTML = Number(this.$refs.follower_num.innerHTML) - 1
         }
         else {
           await this.$store.dispatch('follow/follow', this.user.id)
+          this.$refs.follower_num.innerHTML = Number(this.$refs.follower_num.innerHTML) + 1
         }
 
         this.$store.commit('follow/okFollowing', !this.following)
