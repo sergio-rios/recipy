@@ -56,7 +56,7 @@ export const data = {
     async delete({ commit }, path) {
       try {
         commit('loading')        
-        const response = await axios.put(`${apiURL}/${path}`)
+        const response = await axios.delete(`${apiURL}/${path}`)
         commit('success')
         return response
       }

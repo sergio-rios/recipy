@@ -12,6 +12,8 @@
   dense
   required
   :rules="ingredientsRules"
+  ref="buscador"
+  @change="clear"
 >
   <template v-slot:selection="data">
     <v-chip
@@ -73,6 +75,10 @@ export default {
       catch (error) {
         console.error(error)
       }
+    },
+
+    clear() {
+      this.$refs.buscador.lazySearch = ''
     },
 
     removeSelected(item) {

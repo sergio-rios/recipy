@@ -14,6 +14,18 @@
                 <p>
                   <router-link :to="`/user/${recipy.user_id}`" class="no-link">@{{ recipy.user.nick }}</router-link>
                   <span class="muted-text"> &bull; {{ $date(recipy.created_at) }}</span>
+                  <v-layout>
+                    <v-flex xs1>
+                      <edit-recipy
+                        :post="recipy"
+                        @saved="modifyRecipy"
+                      ></edit-recipy>
+                    </v-flex>
+                    <del-dialog
+                      msg="Estás a punto de eliminar tu publicación para siempre. Perderás todo su contenido, incluyendo los me gusta y comentarios."
+                      :action="deletePost"
+                    ></del-dialog>
+                  </v-layout>
                 </p>
               </v-flex>
               <v-flex xs1 pr-5>
@@ -52,6 +64,8 @@
 import Recipe from './components/Recipe'
 import LikeBtn from './components/LikeBtn'
 import Comments from './components/Commets'
+import EditRecipy from './components/EditRecipy'
+import DelDialog from '@/components/DelDialog'
 
 export default {
   name: 'Recipy',
@@ -63,7 +77,9 @@ export default {
   components: {
     Recipe,
     Comments,
-    LikeBtn
+    LikeBtn,
+    EditRecipy,
+    DelDialog
   },
 
   data: () => ({
@@ -77,6 +93,10 @@ export default {
       return this.recipy.image
         ? this.recipy.image
         : '/img/cover.png'
+    },
+
+    isSelfPost() {
+      return this.$store.getters['auth/user'].id === this.recipy.user_id
     },
 
     disabled() {
@@ -97,7 +117,7 @@ export default {
       return this.loading
         ? this.$text(4, 1, 7)
         : this.$text(4, 1, 6)
-    }
+    },
   },
 
   created() {
@@ -114,6 +134,21 @@ export default {
         console.error(error)
         this.errors = error.error
       }
+    },
+
+    async deletePost() {
+      try {
+        const response = await this.$store.dispatch('data/delete', `post/${this.id}`)
+        console.log(response)
+      }
+      catch (error) {
+        console.error(error)
+        this.errors = error.error
+      }
+    },
+
+    modifyRecipy(data) {
+      this.recipy = data;
     }
   }
 }

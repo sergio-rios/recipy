@@ -47,10 +47,12 @@
       app
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <img src="@/assets/logo.png" class="app-logo" style="width: 32px;" alt="app logo">
+      <router-link to="/" class="no-link">
+        <img src="@/assets/logo.png" class="app-logo" style="width: 32px;" alt="app logo">
+      </router-link>
       <v-toolbar-title class="mr-5 align-center">
-        <span>Recipy</span>
-      </v-toolbar-title>
+          <span>Recipy</span>
+        </v-toolbar-title>
       <v-spacer></v-spacer>
       <AccountCard />
     </v-toolbar>
