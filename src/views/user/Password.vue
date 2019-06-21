@@ -57,7 +57,11 @@ export default {
   computed: {
     ...mapGetters({
       user: 'auth/user'
-    })
+    }),
+
+    passRepeatRules() {
+      return [(this.repetir == this.password_new) || 'Las contraseñas no coinciden']
+    }
   },
 
   data: () => ({
@@ -70,12 +74,6 @@ export default {
       v => (!!v && v.length >= 4) || 'La contraseña debe tener más de 4 caracteres',
     ],
   }),
-
-  computed: {
-    passRepeatRules() {
-      return [(this.repetir == this.password_new) || 'Las contraseñas no coinciden']
-    }
-  },
 
   methods: {
     async save() {
